@@ -12,11 +12,17 @@ COPY . /app
 # Set working directory to /app
 WORKDIR /app
 
+# Copy entrypoint script
+COPY entrypoint.sh /entrypoint.sh
+
+# Make entrypoint script executable
+RUN chmod +x /entrypoint.sh
+
 # Adjust permissions for SQLite database if needed
 RUN chown -R www-data:www-data app/db
 
-# Expose any port (Render will map it to the assigned PORT)
+# Expose port (Render maps it dynamically)
 EXPOSE 3000
 
-# Start PHP built-in server using shell form to expand $PORT
-CMD php -S 0.0.0.0:$PORT
+# Set entrypoint
+ENTRYPOINT ["/entrypoint.sh"]
