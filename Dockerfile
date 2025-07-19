@@ -15,8 +15,8 @@ WORKDIR /app
 # Adjust permissions for SQLite database if needed
 RUN chown -R www-data:www-data app/db
 
-# Expose port 3000
+# Expose any port (Render will map it to the assigned PORT)
 EXPOSE 3000
 
-# Start PHP built-in server on 0.0.0.0:$PORT (Render uses env PORT)
-CMD ["php", "-S", "0.0.0.0:${PORT}"]
+# Start PHP built-in server using shell form to expand $PORT
+CMD php -S 0.0.0.0:$PORT
